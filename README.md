@@ -1,6 +1,6 @@
-# 🧠 Private AI Research & Retrieval Stack
+# 🧠 Private AI Research, RAG & Sysadmin Stack
 
-A modular, self-hosted AI stack for intelligent document retrieval, natural language processing, code generation, and live research — entirely on your own hardware.
+A modular, self-hosted AI stack for intelligent document retrieval, natural language processing, code generation, sysadmin assistance, and live research — entirely on your own hardware.
 
 ---
 
@@ -9,7 +9,8 @@ A modular, self-hosted AI stack for intelligent document retrieval, natural lang
 This stack is designed to provide an alternative to hosted AI services like ChatGPT, with full local control over your data, documents, and model choices. It supports:
 
 - **Retrieval-Augmented Generation (RAG)**: Ask questions and get answers grounded in your private data.
-- **Multi-model support**: Swap between general-purpose and code-optimized models.
+- **Dynamic Model Routing & Memory Management**: Automatically load and unload models based on the task at hand, ensuring optimal memory usage and performance.
+- **Sysadmin Task Automation**: Issue natural-language commands to manage local or remote systems.
 - **Internet-connected agents**: Perform live lookups using APIs (weather, Wikipedia, Wayback Machine, etc.).
 - **User-friendly web interface**: Built on Open WebUI with persistent chat, file uploads, and agent triggering.
 - **Ingestion from common formats**: Markdown, PDFs, Apple Notes, emails, and more.
@@ -20,29 +21,28 @@ This stack is designed to provide an alternative to hosted AI services like Chat
 ## 🧝‍ Core Components
 
 - [**Kotaemon**](https://github.com/Cinnamon/kotaemon) — Local LLM orchestration platform.
+- [**Kotaemon-GPU**](https://github.com/Cinnamon/kotaemon/tree/main/docker/gpu) — Optional GPU-accelerated runtime.
 - [**Open WebUI**](https://github.com/open-webui/open-webui) — Friendly front-end interface.
 - [**Qdrant Vector Database**](https://github.com/qdrant/qdrant) — Fast semantic search backend.
 - [**WireGuard VPN (Optional)**](https://www.wireguard.com/) — For outbound agent privacy.
 
 ---
 
-## 🧠 Supported Models
+## 🔮 Preferred Models
 
-### 🔮 General-Purpose Chat
-- `llama-3-8b-lexi-uncensored.Q4_K_M.gguf`
-- `llama-3-8b-lexi-uncensored.Q2_K.gguf`
+All models are in `GGUF` format and compatible with `llama.cpp`. The orchestrator automatically loads/unloads models based on intent and system resource rules.
 
-### 💻 Code Generation
-- `deepseek-coder-1.3b-instruct.Q4_K_M.gguf`
-- `deepseek-coder-6.7b-instruct.Q4_K_M.gguf`
-
-All models are run with `llama.cpp` (GGUF format) and swappable in the UI.
+- [**llama-3-8b-lexi-uncensored.Q4_K_M.gguf**](https://huggingface.co/NousResearch/Meta-Llama-3-8B-Instruct-GGUF) — General-purpose uncensored chat.
+- [**llama-3-8b-lexi-uncensored.Q2_K.gguf**](https://huggingface.co/NousResearch/Meta-Llama-3-8B-Instruct-GGUF) — Low-memory variant.
+- [**deepseek-coder-1.3b-instruct.Q4_K_M.gguf**](https://huggingface.co/deepseek-ai/deepseek-coder-1.3b-instruct-GGUF) — Lightweight code generation.
+- [**deepseek-coder-6.7b-instruct.Q4_K_M.gguf**](https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct-GGUF) — Advanced code-focused LLM.
+- [**nous-hermes-2-yi-34b.Q4_K_M.gguf**](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B-GGUF) — Sysadmin and devops assistant.
 
 ---
 
 ## 🔎 Embedding Backend
 
-- `nomic-embed-text-v1.5` — Fast, high-quality local embedding model from Nomic AI.
+- [**nomic-embed-text-v1.5**](https://huggingface.co/nomic-ai/nomic-embed-text-v1.5) — Fast, high-quality local embedding model from Nomic AI.
 
 ---
 
@@ -50,13 +50,13 @@ All models are run with `llama.cpp` (GGUF format) and swappable in the UI.
 
 | Type | Description |
 |------|-------------|
-| 📂 Filesystem Scanner | Crawl specified directories for `.pdf`, `.txt`, `.md`, `.docx`, etc. |
-| 📝 Apple Notes | Ingest `.txt` or `.html` exports from Apple Notes |
+| 📝 Apple Notes | Auto-ingest `.txt` or `.html` exports from Apple Notes |
 | 📓 Obsidian Vault | Use `.md` files from your knowledge base |
+| 🗃️ ArchiveBox | Search your self-hosted web archive (HTML, PDFs, screenshots, full-text) |
+| 📂 Filesystem Scanner | Crawl specified directories for `.pdf`, `.txt`, `.md`, `.docx`, etc. |
 | 📧 Email Agent | Parse `.eml`, `.mbox`, or `.txt` email exports |
 | 📅 Calendar Agent | Ingest `.ics` or `.csv` calendar data |
-| 💳 Financial Data | Load `.csv` or `.pdf` statements for spending analysis |
-| 🗃️ ArchiveBox | Search your self-hosted web archive (HTML, PDFs, screenshots, full-text) |
+| 💳 Financial Data | Load `.csv` or `.pdf` statements from Quicken, QuickBooks, etc. |
 
 ---
 
@@ -76,16 +76,15 @@ All models are run with `llama.cpp` (GGUF format) and swappable in the UI.
 | 🛍️ Google Maps | Places, directions, business info |
 | 🌍 OpenStreetMap | Open geographic data |
 
----
+### 🖥️ Integrated Sysadmin Assistant
 
-## 🔒 Privacy & Networking
+A dedicated model (Nous Hermes) can now handle sysadmin requests across Linux, macOS, and Windows — allowing you to:
 
-- All model inference and embedding occurs **100% locally**.
-- All document indexing is done on your machine or LAN.
-- Internet access is **only used by agents**, and can be disabled.
-- Optional VPN routing supported via **WireGuard** using **Gluetun** container.
+- Run commands on local or remote systems (via SSH).
+- Manage services, install packages, tail logs, and more.
+- Ask for playbooks, bash one-liners, or troubleshoot errors.
 
-You can enable container-level VPN by uncommenting the `gluetun` section in `docker-compose.yml`.
+This is enabled by routing system-related queries to the Hermes model using the orchestration layer, and mapping natural language to shell or Ansible code.
 
 ---
 
@@ -103,6 +102,35 @@ You can enable container-level VPN by uncommenting the `gluetun` section in `doc
 | “Give me restaurants near my hotel in Paris.” | Google Maps, OpenStreetMap |
 | “Tell me what I spent on subscriptions last quarter.” | Finance Agent |
 | “Search my ArchiveBox for past research on AI ethics.” | ArchiveBox Ingestor + RAG |
+| “Restart Docker on my Ubuntu VM.” | Sysadmin Agent (Hermes) |
+| “Show me failed login attempts from last night.” | Sysadmin Agent (Hermes) |
+
+---
+
+## 💡 Dynamic Model Routing & Memory Management
+
+```yaml
+🧠 Dynamic Model Loading & Unloading
+```
+The orchestrator treats your models as an intelligent resource pool:
+
+- Keep a general-purpose model (e.g., Lexi) loaded by default.
+- When a specialized model (e.g., Deepseek for code) is needed, the orchestrator loads it dynamically.
+- If RAM is constrained, the general model is temporarily unloaded to prioritize task-specific performance.
+- Once the specialized task completes, the general model is reloaded for continued conversation.
+
+This approach optimizes memory use while ensuring responsiveness to diverse queries. Task routing is based on user intent or direct command (e.g. `load deepseek`).
+
+---
+
+## 🔒 Privacy & Networking
+
+- All model inference and embedding occurs **100% locally**.
+- All document indexing is done on your machine or LAN.
+- Internet access is **only used by agents**, and can be disabled.
+- Optional VPN routing supported via **WireGuard** using **Gluetun** container.
+
+You can enable container-level VPN by uncommenting the `gluetun` section in `docker-compose.yml`.
 
 ---
 
@@ -121,17 +149,11 @@ You can enable container-level VPN by uncommenting the `gluetun` section in `doc
 
 ## 📁 Project Structure
 
-
-
-
-
-```
+```txt
 repo-root/
-│
 ├── docker-compose.yml
 ├── .env
 ├── settings.yaml
-│
 ├── models/               # Pre-downloaded GGUF models
 ├── qdrant_data/          # Persistent vector DB storage
 ├── archivebox_data/
@@ -140,10 +162,8 @@ repo-root/
 ├── notes_ingest/
 ├── financial_data/
 ├── calendar/
-│
 └── syncthing_data/       # Optional file sync
 ```
-
 
 ---
 
@@ -152,7 +172,6 @@ repo-root/
 Coming soon...
 
 Includes:
-
 - Mount instructions (for NAS-backed folders)
 - `.env` config walkthrough
 - VPN toggle instructions
