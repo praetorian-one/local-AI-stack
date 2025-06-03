@@ -2,6 +2,8 @@
 
 A modular, self-hosted AI stack for intelligent document retrieval, natural language processing, code generation, and live research — entirely on your own hardware.
 
+---
+
 ## 🏗️ Project Overview
 
 This stack is designed to provide an alternative to hosted AI services like ChatGPT, with full local control over your data, documents, and model choices. It supports:
@@ -13,88 +15,112 @@ This stack is designed to provide an alternative to hosted AI services like Chat
 - **Ingestion from common formats**: Markdown, PDFs, Apple Notes, emails, and more.
 - **Agent extensibility**: Easily add new tools like Brave Search, ArchiveBox, or Filesystem Scanners.
 
+---
+
 ## 🧝‍ Core Components
 
-- [**Kotaemon**](https://github.com/kota-ai/kotaemon) — A local LLM orchestration platform, chosen for its flexibility, modularity, and ability to support multiple models and agents.
+- [**Kotaemon**](https://github.com/kota-ai/kotaemon) — Local LLM orchestration platform.
+- [**Open WebUI**](https://github.com/open-webui/open-webui) — Friendly front-end interface.
+- [**Qdrant Vector Database**](https://github.com/qdrant/qdrant) — Fast semantic search backend.
+- [**WireGuard VPN (Optional)**](https://www.wireguard.com/) — For outbound agent privacy.
 
-- [**Open WebUI**](https://github.com/open-webui/open-webui) — A browser-based front-end that offers a clean, extensible chat interface with integrated RAG (Retrieval-Augmented Generation) capabilities. It supports document loading, `#command` queries, and direct internet lookups.
-
-- [**Qdrant Vector Database**](https://github.com/qdrant/qdrant) — A high-performance vector search engine chosen for its scalability, rich feature set, and ease of integration with our LLM stack. It stores document embeddings enabling fast semantic retrieval.
-
-- [**WireGuard VPN (Optional)**](https://www.wireguard.com/) — A modern, high-performance VPN protocol. This stack supports optional outbound routing of all service traffic through a WireGuard VPN container such as [**Gluetun**](https://github.com/qdm12/gluetun). Disabled by default. Useful for privacy, location shifting, or routing outbound agent requests through a VPN.
+---
 
 ## 🧠 Supported Models
 
-Pre-downloaded models are mounted into the stack. You may switch them by editing a single variable or dropdown in Open WebUI:
-
 ### 🔮 General-Purpose Chat
-- [`llama-3-8b-lexi-uncensored.Q4_K_M.gguf`](https://huggingface.co/TheBloke/llama-3-8B-Lexi-Uncensored-GGUF)
-- [`llama-3-8b-lexi-uncensored.Q2_K.gguf`](https://huggingface.co/TheBloke/llama-3-8B-Lexi-Uncensored-GGUF)
+- `llama-3-8b-lexi-uncensored.Q4_K_M.gguf`
+- `llama-3-8b-lexi-uncensored.Q2_K.gguf`
 
 ### 💻 Code Generation
-- [`deepseek-coder-1.3b-instruct.Q4_K_M.gguf`](https://huggingface.co/deepseek-ai/deepseek-coder-1.3b-instruct)
-- [`deepseek-coder-6.7b-instruct.Q4_K_M.gguf`](https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct)
+- `deepseek-coder-1.3b-instruct.Q4_K_M.gguf`
+- `deepseek-coder-6.7b-instruct.Q4_K_M.gguf`
 
-All models are served using [llama.cpp](https://github.com/ggerganov/llama.cpp) with GGUF quantization for efficient CPU/GPU inference.
+All models are run with `llama.cpp` (GGUF format) and swappable in the UI.
+
+---
 
 ## 🔎 Embedding Backend
 
-- [**nomic-embed-text-v1.5**](https://huggingface.co/nomic-ai/nomic-embed-text-v1.5) — Fast, high-accuracy sentence embeddings used to index and semantically search all private documents. Backed by the Nomic team (creators of GPT4All embeddings).
+- `nomic-embed-text-v1.5` — Fast, high-quality local embedding model from Nomic AI.
 
-## 📆 Ingestion Pipelines
+---
 
-These components populate the Qdrant vector DB and can be queried by the assistant:
+## 📆 Ingestion Pipelines (Local Data)
 
-- ✅ **Filesystem Scanner Agent** — Crawls user-defined directories for `.pdf`, `.txt`, `.md`, `.docx`, and others.
-- ✅ **Apple Notes Ingestor** — Converts exported `.txt` or `.html` Apple Notes into searchable content.
-- ✅ **Obsidian Vault Support** — Direct `.md` file parsing for knowledge bases and Zettelkasten setups.
-- ✅ **Email Export Agent** — Ingests `.eml`, `.mbox`, or `.txt`-formatted email exports.
-- ✅ **Calendar Agent** — Parses `.ics` and `.csv` calendar exports to contextualize queries.
-- ✅ **Financial Data Agent** — Upload `.csv` or `.pdf` bank statements for local analysis.
-- ✅ **Apple Notes Ingestion** — Ingests exported Apple Notes in `.txt` or `.html` format for semantic retrieval.
-- ✅ **Obsidian Vaults** — Parses `.md` files in structured vaults for rich semantic queries.
+| Type | Description |
+|------|-------------|
+| 📂 Filesystem Scanner | Crawl specified directories for `.pdf`, `.txt`, `.md`, `.docx`, etc. |
+| 📝 Apple Notes | Ingest `.txt` or `.html` exports from Apple Notes |
+| 📓 Obsidian Vault | Use `.md` files from your knowledge base |
+| 📧 Email Agent | Parse `.eml`, `.mbox`, or `.txt` email exports |
+| 📅 Calendar Agent | Ingest `.ics` or `.csv` calendar data |
+| 💳 Financial Data | Load `.csv` or `.pdf` statements for spending analysis |
+
+---
 
 ## 🌐 Internet-Connected Agents
 
-These optional tools allow your AI to access the internet live:
+| Agent | Purpose |
+|-------|---------|
+| 🛙 Brave Search | Privacy-respecting search API |
+| 🌐 Wikipedia | Fetch structured Wikipedia content |
+| ⌛ Wayback Machine | Look up old/deleted URLs |
+| 📚 ArchiveBox | Search your own archived websites |
+| 🗓️ Calendar | Query local calendar data |
+| 💸 Finance | Parse and analyze spending data |
+| 📨 Email | Search messages, invoices, etc. |
+| ⛅ Weather | Live weather via OpenWeather API |
+| 📊 Stock Market | Market data from Yahoo or Alpha Vantage |
+| 📐 Google Search | Fallback to general search |
+| 🛍️ Google Maps | Places, directions, business info |
+| 🌍 OpenStreetMap | Open geographic data |
 
-| Agent | Description | Use Cases |
-|-------|-------------|-----------|
-| 🛙 **Brave Search Agent** | Uses [Brave Search API](https://api.search.brave.com/) for privacy-first web results. | Research topics, recent events. |
-| 🌐 **Wikipedia Agent** | Queries [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) for general knowledge. | Definitions, timelines, bios. |
-| ⌛ **Wayback Machine Agent** | Retrieves historical snapshots via [archive.org](https://archive.org). | View deleted pages, historical prices. |
-| 📚 **ArchiveBox Agent** | Searches your own local [ArchiveBox](https://github.com/ArchiveBox/ArchiveBox) snapshot repo. | Internal link search and backup access. |
-| 🗓️ **Calendar Agent** | Checks availability and schedules. | “What’s on my calendar Friday?” |
-| 💸 **Finance Agent** | Summarizes local CSVs or PDF statements. | “How much did I spend on food in April?” |
-| 📨 **Email Agent** | Searches email bodies and attachments. | “Find the invoice from Comcast.” |
-| ⛅ **Weather Agent** | Fetches current and forecast data via [OpenWeather API](https://openweathermap.org/api). | “Is it raining in Seattle right now?” |
-| 📊 **Stock Market Agent** | Pulls real-time and historical data via [Yahoo Finance API](https://www.yahoofinanceapi.com/) or [Alpha Vantage](https://www.alphavantage.co/). | “What was TSLA's closing price last Friday?” |
-| 📐 **Google Search Agent** | Queries web using [Google Custom Search JSON API](https://developers.google.com/custom-search/v1/overview). | “Show me recent headlines on AI regulation.” |
-| 🛍️ **Google Maps Agent** | Queries location and place data via [Google Maps Platform](https://developers.google.com/maps/documentation). | “What are some tech conferences in Berlin this month?” |
-| 🌍 **OpenStreetMap Agent** | Fetches open-source geographic data from [OpenStreetMap](https://wiki.openstreetmap.org/wiki/OpenStreetMap_API). | “Find a biking trail near Vancouver.” |
+---
+
+## 🔒 Privacy & Networking
+
+- All model inference and embedding occurs **100% locally**.
+- All document indexing is done on your machine or LAN.
+- Internet access is **only used by agents**, and can be disabled.
+- Optional VPN routing supported via **WireGuard** using **Gluetun** container.
+
+You can enable container-level VPN by uncommenting the `gluetun` section in `docker-compose.yml`.
+
+---
+
+## 📌 Use Case Examples
+
+| Prompt | Example Agents Triggered |
+|--------|---------------------------|
+| “Search for news on AI regulation in the EU.” | Brave Search, Google Search |
+| “What’s the forecast for Seattle this weekend?” | Weather Agent |
+| “What’s on my calendar for Tuesday?” | Calendar Agent |
+| “Summarize my Obsidian vault on stoicism.” | Obsidian Ingestor + RAG |
+| “Find emails from Comcast with attachments.” | Email Agent |
+| “What was AAPL’s stock price last month?” | Stock Market Agent |
+| “Find archived version of this broken link.” | Wayback Machine, ArchiveBox |
+| “Give me restaurants near my hotel in Paris.” | Google Maps, OpenStreetMap |
+| “Tell me what I spent on subscriptions last quarter.” | Finance Agent |
+
+---
 
 ## 🛠️ Hardware Requirements
 
-Minimum for smooth operation:
-- **CPU**: Quad-core (AVX2 or AVX512 strongly recommended)
-- **RAM**: 8 GB (16+ GB recommended for multiple models or larger context windows)
-- **Disk**: 100+ GB SSD (fast access for models and vector DB)
-- **GPU (optional)**: CUDA or Metal support for GPU acceleration in `llama.cpp`
+| Resource | Minimum |
+|----------|---------|
+| CPU | Quad-core with AVX2 (or better) |
+| RAM | 8 GB (16 GB+ recommended) |
+| Storage | 100 GB SSD minimum |
+| GPU | Optional (Metal/CUDA for faster inference) |
 
-> ✅ NAS-backed storage (NFS or SMB) is supported for `models/` and `qdrant/` storage. Mount these via the host OS before launching Docker.
+> ✅ Model and vector DB directories can be mounted over NFS or SMB if preferred.
 
-## 💪 Deployment Strategy
-
-The full stack is containerized using Docker Compose. It includes:
-
-- Open WebUI front-end
-- Kotaemon agent runtime
-- Qdrant vector DB
-- Optional VPN via WireGuard container
-- Optional document sync via Syncthing
-- Ingestion pipelines and config files
+---
 
 ## 📁 Project Structure
+
+
 
 ```
 repo-root/
@@ -115,13 +141,16 @@ repo-root/
 └── syncthing_data/       # Optional file sync
 ```
 
+
+---
+
 ## 🥐 Setup Instructions
 
-Will be added after all files are finalized, including:
+Coming soon...
 
-- System prerequisites
-- Mounting network shares (if used)
-- Model download script
-- `.env` and `settings.yaml` customization
-- VPN setup (optional)
-- Launching the stack
+Includes:
+
+- Mount instructions (for NAS-backed folders)
+- `.env` config walkthrough
+- VPN toggle instructions
+- How to run and update containers
