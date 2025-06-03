@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  kotaemon:
+    image: kotaai/kotaemon:latest
+    container_name: kotaemon
+    ports:
+      - "8001:8001"  # Kotaemon REST API
+    volumes:
+      - ./models:/app/models
+      - ./config/settings.yaml:/app/config/settings.yaml:ro
+      - ./data:/app/data
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "3000:8080"  # WebUI in browser
+    volumes:
+      - open-webui-data:/app/backend/data
+    environment:
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+      - OPENAI_API_KEY=sk-proxy  # Placeholder to enable UI
+    restart: unless-stopped
+    depends_on:
+      - kotaemon
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./qdrant/storage:/qdrant/storage
+    restart: unless-stopped
+
+  # Optional container-based VPN (WireGuard) using Gluetun
+  # Uncomment this section to route all container traffic through VPN
+  # gluetun:
+  #   image: qmcgaw/gluetun
+  #   container_name: gluetun
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     - VPN_SERVICE_PROVIDER=protonvpn
+  #     - OPENVPN_USER=${VPN_USER}
+  #     - OPENVPN_PASSWORD=${VPN_PASS}
+  #     - SERVER_COUNTRIES=US
+  #   ports:
+  #     - "3000:8080"    # WebUI through VPN
+  #     - "8001:8001"    # Kotaemon API through VPN
+  #   volumes:
+  #     - ./gluetun:/gluetun
+  #   restart: unless-stopped
+
+volumes:
+  open-webui-data:
