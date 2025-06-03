@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+langchain
+langchain-community
+qdrant-client
+llama-cpp-python
+pydantic
+python-dotenv
+httpx
+aiofiles
+tqdm
+beautifulsoup4
+lxml
