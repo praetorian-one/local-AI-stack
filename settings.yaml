@@ -1,0 +1,75 @@
+# === LLM Configuration ===
+llm:
+  model_path: /app/models/llama-3-8b-lexi-uncensored.Q4_K_M.gguf
+  backend: llama-cpp
+  context_window: 8192
+  temperature: 0.7
+  max_tokens: 2048
+  system_prompt: |
+    You are a helpful and private AI assistant running locally.
+    You can access user files, search the internet, and answer questions using your own knowledge.
+    Be honest and cite sources when live data is used.
+
+# === Embedding Backend ===
+embedding:
+  model: nomic-embed-text-v1.5
+  provider: nomic
+  cache: true
+  quantized: true
+
+# === Vector Store ===
+vectorstore:
+  type: qdrant
+  url: http://qdrant:6333
+  collection: documents
+  embedding_dimension: 768
+
+# === Data Sources ===
+data_sources:
+  apple_notes:
+    path: /app/data/apple_notes
+    enabled: true
+  obsidian:
+    path: /app/data/obsidian_vault
+    enabled: true
+  filesystem_scanner:
+    watch_path: /app/data/scanner_watch
+    include_ext: [".md", ".txt", ".pdf", ".docx"]
+    enabled: true
+
+# === Internet Agents ===
+agents:
+  brave_search:
+    enabled: true
+    api_key: ${BRAVE_API_KEY}
+  wikipedia:
+    enabled: true
+  archivebox:
+    enabled: true
+    path: /app/data/archivebox
+  wayback:
+    enabled: true
+  openstreetmap:
+    enabled: true
+  google_maps:
+    enabled: true
+    api_key: ${GOOGLE_MAPS_API_KEY}
+  serpapi:
+    enabled: true
+    api_key: ${SERP_API_KEY}
+  youtube:
+    enabled: true
+    api_key: ${YOUTUBE_API_KEY}
+  twitter:
+    enabled: true
+    bearer_token: ${TWITTER_BEARER_TOKEN}
+  newsapi:
+    enabled: true
+    api_key: ${NEWS_API_KEY}
+  semantic_scholar:
+    enabled: true
+  weatherapi:
+    enabled: true
+    api_key: ${WEATHER_API_KEY}
+  financial_data:
+    enabled: true
