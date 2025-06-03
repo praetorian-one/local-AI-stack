@@ -38,7 +38,6 @@ services:
 #   restart: unless-stopped
     
 
-
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
@@ -61,7 +60,36 @@ services:
     volumes:
       - ./qdrant/storage:/qdrant/storage
     restart: unless-stopped
+  
+  langchain-router:
+    build:
+      context: ./langchain-router
+    container_name: langchain-router
+    ports:
+      - "8500:8500"  # FastAPI router API
+    volumes:
+      - ./langchain-router:/app
+    depends_on:
+      - kotaemon
+    restart: unless-stopped
+    
+  cloud-agents:
+    build:
+      context: ./agents
+      dockerfile: cloud-agents.Dockerfile
+    container_name: cloud-agents
+    environment:
+      - REPLICATE_API_KEY=${REPLICATE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - RUNPOD_API_KEY=${RUNPOD_API_KEY}
+    volumes:
+      - ./agents:/app/agents
+      - ./config/.env:/app/config/.env
+    depends_on:
+      - kotaemon
 
+
+    
   # Optional container-based VPN (WireGuard) using Gluetun
   # Uncomment this section to route all container traffic through VPN
   # gluetun:

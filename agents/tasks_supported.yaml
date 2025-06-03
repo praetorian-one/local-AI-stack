@@ -1,0 +1,19 @@
+image_generation:
+  keywords: [generate image, create art, design poster, illustration]
+  needs_gpu: true
+
+image_upscaling:
+  keywords: [enhance image, upscale, improve resolution]
+  needs_gpu: true
+
+text_to_video:
+  keywords: [generate video, animation, convert script to video]
+  needs_gpu: true
+
+audio_transcription:
+  keywords: [transcribe audio, convert speech to text]
+  needs_gpu: false
+
+dalle_image:
+  keywords: [generate picture, dalle, surreal art, openai image]
+  needs_gpu: true
