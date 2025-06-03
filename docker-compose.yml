@@ -14,6 +14,31 @@ services:
       - .env
     restart: unless-stopped
 
+# Enable this container (kotaemon-gpu) and disbale previous congtainer (kotaemon) to enble NVIDIA GPU support
+# Make sure the host has NVIDIA drivers installed and the NVIDIA Container Toolkit
+# https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+
+# kotaemon-gpu:
+#   image: kotaai/kotaemon:latest
+#   container_name: kotaemon-gpu
+#   ports:
+#     - "8001:8001"
+#   volumes:
+#     - ./models:/app/models
+#     - ./config/settings.yaml:/app/config/settings.yaml:ro
+#     - ./data:/app/data
+#   env_file:
+#     - .env
+#   runtime: nvidia
+#   deploy:
+#     resources:
+#       reservations:
+#         devices:
+#           - capabilities: [gpu]
+#   restart: unless-stopped
+    
+
+
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
