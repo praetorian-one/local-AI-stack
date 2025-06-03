@@ -38,7 +38,6 @@ services:
 #   restart: unless-stopped
     
 
-
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
@@ -53,7 +52,7 @@ services:
     depends_on:
       - kotaemon
 
-  qdrant:
+ qdrant:
     image: qdrant/qdrant:latest
     container_name: qdrant
     ports:
@@ -61,7 +60,20 @@ services:
     volumes:
       - ./qdrant/storage:/qdrant/storage
     restart: unless-stopped
+  
+  langchain-router:
+    build:
+      context: ./langchain-router
+    container_name: langchain-router
+    ports:
+      - "8500:8500"  # FastAPI router API
+    volumes:
+      - ./langchain-router:/app
+    depends_on:
+      - kotaemon
+    restart: unless-stopped
 
+    
   # Optional container-based VPN (WireGuard) using Gluetun
   # Uncomment this section to route all container traffic through VPN
   # gluetun:
