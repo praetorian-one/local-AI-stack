@@ -56,6 +56,7 @@ All models are run with `llama.cpp` (GGUF format) and swappable in the UI.
 | 📧 Email Agent | Parse `.eml`, `.mbox`, or `.txt` email exports |
 | 📅 Calendar Agent | Ingest `.ics` or `.csv` calendar data |
 | 💳 Financial Data | Load `.csv` or `.pdf` statements for spending analysis |
+| 🗃️ ArchiveBox | Search your self-hosted web archive (HTML, PDFs, screenshots, full-text) |
 
 ---
 
@@ -66,7 +67,6 @@ All models are run with `llama.cpp` (GGUF format) and swappable in the UI.
 | 🛙 Brave Search | Privacy-respecting search API |
 | 🌐 Wikipedia | Fetch structured Wikipedia content |
 | ⌛ Wayback Machine | Look up old/deleted URLs |
-| 📚 ArchiveBox | Search your own archived websites |
 | 🗓️ Calendar | Query local calendar data |
 | 💸 Finance | Parse and analyze spending data |
 | 📨 Email | Search messages, invoices, etc. |
@@ -99,9 +99,10 @@ You can enable container-level VPN by uncommenting the `gluetun` section in `doc
 | “Summarize my Obsidian vault on stoicism.” | Obsidian Ingestor + RAG |
 | “Find emails from Comcast with attachments.” | Email Agent |
 | “What was AAPL’s stock price last month?” | Stock Market Agent |
-| “Find archived version of this broken link.” | Wayback Machine, ArchiveBox |
+| “Find archived version of this broken link.” | Wayback Machine |
 | “Give me restaurants near my hotel in Paris.” | Google Maps, OpenStreetMap |
 | “Tell me what I spent on subscriptions last quarter.” | Finance Agent |
+| “Search my ArchiveBox for past research on AI ethics.” | ArchiveBox Ingestor + RAG |
 
 ---
 
@@ -119,6 +120,8 @@ You can enable container-level VPN by uncommenting the `gluetun` section in `doc
 ---
 
 ## 📁 Project Structure
+
+
 
 
 
