@@ -13,7 +13,7 @@ This stack is designed to provide an alternative to hosted AI services like Chat
 - **Ingestion from common formats**: Markdown, PDFs, Apple Notes, emails, and more.
 - **Agent extensibility**: Easily add new tools like Brave Search, ArchiveBox, or Filesystem Scanners.
 
-## 🧩 Core Components
+## 🧍‍ Core Components
 
 - [**Kotaemon**](https://github.com/kota-ai/kotaemon) — A local LLM orchestration platform, chosen for its flexibility, modularity, and ability to support multiple models and agents.
 
@@ -41,7 +41,7 @@ All models are served using [llama.cpp](https://github.com/ggerganov/llama.cpp) 
 
 - [**nomic-embed-text-v1.5**](https://huggingface.co/nomic-ai/nomic-embed-text-v1.5) — Fast, high-accuracy sentence embeddings used to index and semantically search all private documents. Backed by the Nomic team (creators of GPT4All embeddings).
 
-## 📦 Ingestion Pipelines
+## 📆 Ingestion Pipelines
 
 These components populate the Qdrant vector DB and can be queried by the assistant:
 
@@ -51,6 +51,8 @@ These components populate the Qdrant vector DB and can be queried by the assista
 - ✅ **Email Export Agent** — Ingests `.eml`, `.mbox`, or `.txt`-formatted email exports.
 - ✅ **Calendar Agent** — Parses `.ics` and `.csv` calendar exports to contextualize queries.
 - ✅ **Financial Data Agent** — Upload `.csv` or `.pdf` bank statements for local analysis.
+- ✅ **Apple Notes Ingestion** — Ingests exported Apple Notes in `.txt` or `.html` format for semantic retrieval.
+- ✅ **Obsidian Vaults** — Parses `.md` files in structured vaults for rich semantic queries.
 
 ## 🌐 Internet-Connected Agents
 
@@ -58,14 +60,15 @@ These optional tools allow your AI to access the internet live:
 
 | Agent | Description | Use Cases |
 |-------|-------------|-----------|
-| 🧭 **Brave Search Agent** | Uses [Brave Search API](https://api.search.brave.com/) for privacy-first web results. | Research topics, recent events. |
+| 🛍️ **Brave Search Agent** | Uses [Brave Search API](https://api.search.brave.com/) for privacy-first web results. | Research topics, recent events. |
 | 🌐 **Wikipedia Agent** | Queries Wikipedia API for general knowledge. | Definitions, timelines, bios. |
 | ⌛ **Wayback Machine Agent** | Retrieves historical snapshots via [archive.org](https://archive.org). | View deleted pages, historical prices. |
 | 📚 **ArchiveBox Agent** | Searches your own local [ArchiveBox](https://github.com/ArchiveBox/ArchiveBox) snapshot repo. | Internal link search and backup access. |
 | 📅 **Calendar Agent** | Checks availability and schedules. | “What’s on my calendar Friday?” |
 | 💸 **Finance Agent** | Summarizes local CSVs or PDF statements. | “How much did I spend on food in April?” |
-| 📬 **Email Agent** | Searches email bodies and attachments. | “Find the invoice from Comcast.” |
+| 📨 **Email Agent** | Searches email bodies and attachments. | “Find the invoice from Comcast.” |
 | ⛅ **Weather Agent** | Fetches current and forecast data via OpenWeather API. | “Is it raining in Seattle right now?” |
+| 📊 **Stock Market Agent** | Pulls real-time and historical data via [Yahoo Finance API](https://www.yahoofinanceapi.com/) or [Alpha Vantage](https://www.alphavantage.co/). | “What was TSLA's closing price last Friday?”, “Compare AAPL and MSFT year-to-date.” |
 
 ## 🛠️ Hardware Requirements
 
@@ -77,7 +80,7 @@ Minimum for smooth operation:
 
 > ✅ NAS-backed storage (NFS or SMB) is supported for `models/` and `qdrant/` storage. Mount these via the host OS before launching Docker.
 
-## 🐳 Deployment Strategy
+## 💪 Deployment Strategy
 
 The full stack is containerized using Docker Compose. It includes:
 
@@ -90,3 +93,32 @@ The full stack is containerized using Docker Compose. It includes:
 
 ## 📁 Project Structure
 
+```
+repo-root/
+│
+├── docker-compose.yml
+├── .env
+├── settings.yaml
+│
+├── models/               # Pre-downloaded GGUF models
+├── qdrant_data/          # Persistent vector DB storage
+├── archivebox_data/
+├── email_exports/
+├── obsidian/
+├── notes_ingest/
+├── financial_data/
+├── calendar/
+│
+└── syncthing_data/       # Optional file sync
+```
+
+## 🥐 Setup Instructions
+
+Will be added after all files are finalized, including:
+
+- System prerequisites
+- Mounting network shares (if used)
+- Model download script
+- `.env` and `settings.yaml` customization
+- VPN setup (optional)
+- Launching the stack
