@@ -1,0 +1,35 @@
+enabled: true
+priority: 10
+description: >
+  Outsources tasks that require GPU or cloud-based AI services unavailable on the local stack.
+
+routes:
+  image_generation:
+    service: replicate
+    model: stability-ai/stable-diffusion
+    endpoint: https://api.replicate.com/v1/predictions
+    api_key: ${REPLICATE_API_KEY}
+
+  image_upscaling:
+    service: replicate
+    model: cjwbw/real-esrgan
+    endpoint: https://api.replicate.com/v1/predictions
+    api_key: ${REPLICATE_API_KEY}
+
+  text_to_video:
+    service: runpod
+    model: modelscope/T2V
+    endpoint: https://api.runpod.io/video
+    api_key: ${RUNPOD_API_KEY}
+
+  audio_transcription:
+    service: openai
+    model: whisper-1
+    endpoint: https://api.openai.com/v1/audio/transcriptions
+    api_key: ${OPENAI_API_KEY}
+
+  dalle_image:
+    service: openai
+    model: dall-e-3
+    endpoint: https://api.openai.com/v1/images/generations
+    api_key: ${OPENAI_API_KEY}
