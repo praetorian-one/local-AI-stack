@@ -19,7 +19,7 @@ This stack is designed to provide an alternative to hosted AI services like Chat
 
 ## 🧝‍ Core Components
 
-- [**Kotaemon**](https://github.com/kota-ai/kotaemon) — Local LLM orchestration platform.
+- [**Kotaemon**](https://github.com/Cinnamon/kotaemon) — Local LLM orchestration platform.
 - [**Open WebUI**](https://github.com/open-webui/open-webui) — Friendly front-end interface.
 - [**Qdrant Vector Database**](https://github.com/qdrant/qdrant) — Fast semantic search backend.
 - [**WireGuard VPN (Optional)**](https://www.wireguard.com/) — For outbound agent privacy.
