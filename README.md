@@ -22,9 +22,9 @@ The core idea is to blend **local document ingestion** and **live web agents** i
 
 ### Core Components
 
-- **Kotaemon** — A local LLM orchestration platform, chosen for its flexibility, modularity, and ability to support multiple models and agents.  
-- **Open WebUI** — A browser-based front-end that offers a clean, extensible chat interface with integrated RAG (Retrieval-Augmented Generation) capabilities. It supports document loading, #command queries, and direct internet lookups.  
-- **Qdrant Vector Database** — A high-performance vector search engine chosen for its scalability, rich feature set, and ease of integration with our LLM stack. It stores document embeddings enabling fast semantic retrieval.
+- [**Kotaemon**](https://github.com/kota-ai/kotaemon) — A local LLM orchestration platform, chosen for its flexibility, modularity, and ability to support multiple models and agents.  
+- [**Open WebUI**](https://github.com/open-webui/open-webui) — A browser-based front-end that offers a clean, extensible chat interface with integrated RAG (Retrieval-Augmented Generation) capabilities. It supports document loading, #command queries, and direct internet lookups.  
+- [**Qdrant Vector Database**](https://github.com/qdrant/qdrant) — A high-performance vector search engine chosen for its scalability, rich feature set, and ease of integration with our LLM stack. It stores document embeddings enabling fast semantic retrieval.
 
 ---
 
@@ -35,12 +35,15 @@ Models are **stored locally** or on **network shares** mounted into the containe
 Currently supported models include:
 
 - **General Purpose:**  
-  - `llama-3-8b-lexi-uncensored.Q4_K_M.gguf` (full precision)  
-  - `llama-3-8b-lexi-uncensored.Q2_K.gguf` (quantized smaller size)
+  - [`llama-3-8b-lexi-uncensored.Q4_K_M.gguf`](https://huggingface.co/TheBloke/Llama-3-8B-Lexi-Uncensored-GGUF) (full precision)  
+  - [`llama-3-8b-lexi-uncensored.Q2_K.gguf`](https://huggingface.co/TheBloke/Llama-3-8B-Lexi-Uncensored-GGUF) (quantized smaller size)
 
 - **Coding Models:**  
-  - `Deepseek-Coder 1.3B GGUF` (lightweight)  
-  - `Deepseek-Coder 6.7B GGUF` (full featured)
+  - [`Deepseek-Coder 1.3B GGUF`](https://huggingface.co/deepseek-ai/deepseek-coder-1.3b-base) (lightweight)  
+  - [`Deepseek-Coder 6.7B GGUF`](https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-base) (full featured)
+
+- **Embedding Model:**  
+  - [`nomic-embed-text-v1.5`](https://huggingface.co/nomic-ai/nomic-embed-text-v1.5) — fast and accurate embedding backend compatible with Qdrant.
 
 You can **switch between models at runtime** via the Open WebUI interface, enabling experimentation and workload-specific tuning without restarting containers.
 
@@ -82,7 +85,16 @@ This stack can run on modest hardware but scales gracefully with better resource
 - **News API**: Aggregated news headlines and articles.  
 - **Semantic Scholar**: Academic paper metadata and abstracts.  
 - **Financial Market Data**: Real-time stock and index data.  
-- **Weather API**: Current weather and multi-day forecasts.
+- **Weather API**  
+  ✅ Capabilities:
+  - Current weather  
+  - 3–7 day forecasts  
+  - Weather-based planning suggestions  
+
+  🧠 Use Case Examples:  
+  - “What’s the forecast for Seattle this weekend?”  
+  - “Is it raining right now in Kyoto?”  
+  - “What’s the UV index at my location?”
 
 Each agent is integrated for **real-time data augmentation** of the conversational experience, enriching answers beyond local knowledge.
 
