@@ -13,7 +13,7 @@ This stack is designed to provide an alternative to hosted AI services like Chat
 - **Ingestion from common formats**: Markdown, PDFs, Apple Notes, emails, and more.
 - **Agent extensibility**: Easily add new tools like Brave Search, ArchiveBox, or Filesystem Scanners.
 
-## 🧍‍ Core Components
+## 🧝‍ Core Components
 
 - [**Kotaemon**](https://github.com/kota-ai/kotaemon) — A local LLM orchestration platform, chosen for its flexibility, modularity, and ability to support multiple models and agents.
 
@@ -60,15 +60,18 @@ These optional tools allow your AI to access the internet live:
 
 | Agent | Description | Use Cases |
 |-------|-------------|-----------|
-| 🛍️ **Brave Search Agent** | Uses [Brave Search API](https://api.search.brave.com/) for privacy-first web results. | Research topics, recent events. |
-| 🌐 **Wikipedia Agent** | Queries Wikipedia API for general knowledge. | Definitions, timelines, bios. |
+| 🛙 **Brave Search Agent** | Uses [Brave Search API](https://api.search.brave.com/) for privacy-first web results. | Research topics, recent events. |
+| 🌐 **Wikipedia Agent** | Queries [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) for general knowledge. | Definitions, timelines, bios. |
 | ⌛ **Wayback Machine Agent** | Retrieves historical snapshots via [archive.org](https://archive.org). | View deleted pages, historical prices. |
 | 📚 **ArchiveBox Agent** | Searches your own local [ArchiveBox](https://github.com/ArchiveBox/ArchiveBox) snapshot repo. | Internal link search and backup access. |
-| 📅 **Calendar Agent** | Checks availability and schedules. | “What’s on my calendar Friday?” |
+| 🗓️ **Calendar Agent** | Checks availability and schedules. | “What’s on my calendar Friday?” |
 | 💸 **Finance Agent** | Summarizes local CSVs or PDF statements. | “How much did I spend on food in April?” |
 | 📨 **Email Agent** | Searches email bodies and attachments. | “Find the invoice from Comcast.” |
-| ⛅ **Weather Agent** | Fetches current and forecast data via OpenWeather API. | “Is it raining in Seattle right now?” |
-| 📊 **Stock Market Agent** | Pulls real-time and historical data via [Yahoo Finance API](https://www.yahoofinanceapi.com/) or [Alpha Vantage](https://www.alphavantage.co/). | “What was TSLA's closing price last Friday?”, “Compare AAPL and MSFT year-to-date.” |
+| ⛅ **Weather Agent** | Fetches current and forecast data via [OpenWeather API](https://openweathermap.org/api). | “Is it raining in Seattle right now?” |
+| 📊 **Stock Market Agent** | Pulls real-time and historical data via [Yahoo Finance API](https://www.yahoofinanceapi.com/) or [Alpha Vantage](https://www.alphavantage.co/). | “What was TSLA's closing price last Friday?” |
+| 📐 **Google Search Agent** | Queries web using [Google Custom Search JSON API](https://developers.google.com/custom-search/v1/overview). | “Show me recent headlines on AI regulation.” |
+| 🛍️ **Google Maps Agent** | Queries location and place data via [Google Maps Platform](https://developers.google.com/maps/documentation). | “What are some tech conferences in Berlin this month?” |
+| 🌍 **OpenStreetMap Agent** | Fetches open-source geographic data from [OpenStreetMap](https://wiki.openstreetmap.org/wiki/OpenStreetMap_API). | “Find a biking trail near Vancouver.” |
 
 ## 🛠️ Hardware Requirements
 
