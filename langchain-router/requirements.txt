@@ -1,8 +1,16 @@
-fastapi
-uvicorn
-langchain
-langchain-community
-qdrant-client
-llama-cpp-python
-pydantic
-python-dotenv
+fastapi                 # Web framework for building the LangChain router API
+uvicorn                 # ASGI server to run FastAPI applications asynchronously
+langchain               # Core LangChain framework for building RAG & agent workflows
+langchain-community     # Community-supported LangChain integrations and extensions
+qdrant-client           # Python client for Qdrant vector search database
+llama-cpp-python        # Python bindings for llama.cpp to run local LLaMA models
+pydantic                # Data validation and settings management for FastAPI & models
+python-dotenv           # Loads environment variables from a .env file
+
+httpx                   # Async HTTP client used by LangChain tools for API requests
+aiofiles                # Async file IO for efficient file-based document loading
+tqdm                    # Progress bars, useful during long-running ingestion or downloads
+
+# Optional (add if you plan to parse or scrape HTML content from web sources):
+beautifulsoup4          # HTML/XML parser for web scraping or parsing API responses
+lxml                    # Fast XML and HTML parser, dependency for BeautifulSoup
