@@ -1,4 +1,7 @@
-# 🚧 THIS PROJECT IS UNDER DEVELOPMENT 🚧
+<p align="center">
+<strong> 🚧 THIS PROJECT IS UNDER DEVELOPMENT AND NOT FUNCTIONAL 🚧 </strong> 
+  
+</p>
 
 # 🧠 Private AI Research, RAG & Sysadmin Stack
 
