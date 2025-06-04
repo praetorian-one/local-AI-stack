@@ -1,3 +1,5 @@
+# 🚧 THIS PROJECT IS UNDER DEVELOPMENT 🚧
+
 # 🧠 Private AI Research, RAG & Sysadmin Stack
 
 A modular, self-hosted AI stack for intelligent document retrieval, natural language processing, code generation, sysadmin assistance, and live research — entirely on your own hardware.
